@@ -1,12 +1,10 @@
-FROM debian:buster
+FROM debian:stable
 
-RUN apt-get update && \
-    apt-get install -y mariadb-server mariadb-client && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y mariadb-server && apt-get -y install systemctl
 
-COPY init.sql /docker-entrypoint-initdb.d/
+COPY create.sh /create.sh
+COPY init.sql /mariadb-conf.d/init.sql
+COPY my.cnf /etc/mysql/my.cnf
+RUN chmod +x /create.sh
 
-# Expose port 9000 for php-fpm
-EXPOSE 3306
-
-CMD ["mysqld"]
+CMD ["./create.sh"]

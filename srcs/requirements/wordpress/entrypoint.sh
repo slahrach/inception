@@ -1,14 +1,9 @@
 #!/bin/sh
-cd /var/www/html
 #downloads the WordPress core files, the option ( --allow-root ) will run the command as root
-wp core download --allow-root
-
 #creates new user with editor role
-
-#echo "hello"
-# exec echo "hello"
+wp user create ${WP_USER} --user_pass=${WP_PASSWORD} --role=editor --allow-root
 #generates the WordPress configuration file
-wp config create --dbname=${DB_NAME} --dbuser=${DB_USER} --dbpass=${DB_PASSWORD} --dbhost=${DB_HOST} --allow-root
+wp config create --dbname=${DB_NAME} --dbuser=${DB_USER} --dbpass=${DB_PASSWORD} --dbhost="mariadb" --allow-root
 
 # wp user create ${WP_USER} --user_pass=${WP_PASSWORD} --role=editor --allow-root
 #install a new WordPress site using the downloaded core files
