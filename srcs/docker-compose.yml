@@ -1,0 +1,73 @@
+version: "3.9"
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - mynetwork
+    volumes:
+      - wordpress-db:/var/lib/mysql
+
+  # wordpress:
+  #   build: ./requirements/wordpress
+  #   container_name: wordpress
+  #   depends_on:
+  #     - mariadb
+  #   restart: always
+  #   ports:
+  #     - 9000:9000
+  #   environment:
+  #     DB_NAME: ${DB_NAME}
+  #     DB_USER: ${DB_USER}
+  #     DB_PASSWORD: ${DB_PASSWORD}
+  #     DB_HOST: ${DB_HOST}
+  #     ADMIN_USER: ${ADMIN_USER}
+  #     ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+  #     ADMIN_EMAIL: ${ADMIN_EMAIL}
+  #     WP_USER: ${WP_USER}
+  #     WP_PASSWORD: ${WP_PASSWORD}
+  #   networks:
+  #     - mynetwork
+  #   volumes:
+  #     - wordpress-files:/var/www/html
+  #     - wordpress-db:/var/lib/mysql
+
+  # nginx:
+  #   build: ./requirements/nginx
+  #   container_name: nginx
+  #   depends_on:
+  #     - wordpress
+  #   restart: always
+  #   ports:
+  #     - "443:443"
+  #   networks:
+  #     - mynetwork
+
+
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  wordpress-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/macbook/data/wordpress-db
+  wordpress-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/macbook/data/wordpress-files
