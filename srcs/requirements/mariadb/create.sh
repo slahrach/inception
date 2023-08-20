@@ -20,9 +20,15 @@ echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PA
 echo "FLUSH PRIVILEGES;" >> init.sql
 
 
-mysqld -u root &
-sleep 5
-mysql --user=root < init.sql
-
-# Keep the container running
-tail -f /dev/null
+service mariadb start
+# Loop for checking if the mariadb server is up or not
+while ! mysqladmin ping -hlocalhost --silent 2>/dev/null; do
+ sleep 1
+done
+mysql -u root < init.sql
+service mariadb stop
+while  mysqladmin ping -hlocalhost --silent 2>/dev/null; do
+ sleep 1
+done
+# run the service in the foreground
+exec mysqld -u root

@@ -1,18 +1,19 @@
 build:
-	mkdir -p /Users/$(USER)/data/wordpress-files
-	mkdir -p /Users/$(USER)/data/wordpress-db
+	# mkdir -p /nfs/homes/$(USER)/data/wordpress-files
+	# mkdir -p /nfs/homes/$(USER)/data/wordpress-db
 	docker-compose build --no-cache
 
 up:
-	docker-compose up -d --remove-orphans --force-recreate 
+	docker-compose up --force-recreate
 
 down:
 	docker-compose down -v wordpress mariadb --rmi all
 
-rebuild: clean down build up
+rebuild: down clean build up
 
 clean:
 	docker-compose rm -f
-	rm -rf /Users/$(USER)/data/wordpress-files
-	rm -rf /Users/$(USER)/data/wordpress-db
+	docker system prune -f
+	# rm -rf /nfs/homes/$(USER)/data/wordpress-files
+	# rm -rf /nfs/homes/$(USER)/data/wordpress-db
 
