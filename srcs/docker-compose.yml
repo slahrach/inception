@@ -5,7 +5,7 @@ services:
     container_name: mariadb
     restart: always
     ports:
-      - 3307:3306
+      - 3306:3306
     environment:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
@@ -14,8 +14,8 @@ services:
       DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     networks:
       - mynetwork
-    # volumes:
-    #   - wordpress-db:/var/lib/mysql
+    volumes:
+      - wordpress-db:/var/lib/mysql
 
   wordpress:
     build: ./requirements/wordpress
@@ -37,9 +37,9 @@ services:
       WP_PASSWORD: ${WP_PASSWORD}
     networks:
       - mynetwork
-    # volumes:
-    #   - wordpress-files:/var/www/html
-    #   - wordpress-db:/var/lib/mysql
+    volumes:
+      - wordpress-files:/var/www/html
+      - wordpress-db:/var/lib/mysql
 
   nginx:
     build: ./requirements/nginx
@@ -48,7 +48,7 @@ services:
       - wordpress
     restart: always
     ports:
-      - "4430:443"
+      - "443:443"
     networks:
       - mynetwork
 
@@ -58,16 +58,16 @@ networks:
   mynetwork:
     driver: bridge
 
-# volumes:
-#   wordpress-db:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: /nfs/homes/slahrach/data/wordpress-db
-#   wordpress-files:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: /nfs/homes/slahrach/data/wordpress-files
+volumes:
+  wordpress-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/macbook/data/wordpress-db
+  wordpress-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/macbook/data/wordpress-files

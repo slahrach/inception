@@ -1,6 +1,6 @@
 build:
-	# mkdir -p /nfs/homes/$(USER)/data/wordpress-files
-	# mkdir -p /nfs/homes/$(USER)/data/wordpress-db
+	mkdir -p /Users/macbook/data/wordpress-files
+	mkdir -p /Users/macbook/data/wordpress-db
 	docker-compose build --no-cache
 
 up:
@@ -14,6 +14,6 @@ rebuild: down clean build up
 clean:
 	docker-compose rm -f
 	docker system prune -f
-	# rm -rf /nfs/homes/$(USER)/data/wordpress-files
-	# rm -rf /nfs/homes/$(USER)/data/wordpress-db
+	rm -rf /Users/macbook/data/wordpress-files
+	rm -rf /Users/macbook/data/wordpress-db
 

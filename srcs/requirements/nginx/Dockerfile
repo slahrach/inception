@@ -6,12 +6,12 @@
 #    By: slahrach <slahrach@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 06:16:36 by slahrach          #+#    #+#              #
-#    Updated: 2023/08/08 14:58:54 by slahrach         ###   ########.fr        #
+#    Updated: 2023/08/21 18:02:49 by slahrach         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Start with a minimal base image (e.g., debian)
-FROM debian:stable
+FROM debian:buster
 
 # Install necessary packages (NGINX, OpenSSL)
 RUN apt-get update && apt-get install -y nginx
