@@ -1,6 +1,6 @@
 #!/bin/bash
 
-service mysql start
+service mariadb start
 
 sleep 3
 
@@ -12,11 +12,9 @@ mysql -u root -e "GRANT ALL PRIVILEGES ON $DB_NAME.* to '$DB_USER'@'%';"
 
 mysql -u root -e "FLUSH PRIVILEGES;"
 
-service mysql stop
+service mariadb stop
 
-mysqld_safe
-
-
+exec mysqld -u root
 
 # #!/bin/bash
 

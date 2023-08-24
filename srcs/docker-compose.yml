@@ -3,6 +3,7 @@ services:
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
+    image: mariadb:v1
     restart: always
     ports:
       - 3306:3306
@@ -20,6 +21,7 @@ services:
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
+    image: wordpress:v1
     depends_on:
       - mariadb
     restart: always
@@ -44,6 +46,7 @@ services:
   nginx:
     build: ./requirements/nginx
     container_name: nginx
+    image: nginx:v1
     depends_on:
       - wordpress
     restart: always
@@ -51,6 +54,8 @@ services:
       - "443:443"
     networks:
       - mynetwork
+    volumes:
+      - wordpress-files:/var/www/html
 
 
 

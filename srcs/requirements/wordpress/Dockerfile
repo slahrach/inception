@@ -1,5 +1,5 @@
 # Base image with Debian
-FROM debian:buster
+FROM debian:bullseye
 
 # Install necessary dependencies
 RUN apt-get update && apt-get install -y \
@@ -18,7 +18,8 @@ RUN rm -rf /var/www/html/*
 
 RUN mkdir -p /var/www/html && chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
 
-RUN sed -i 's~listen = /run/php/php7\.3-fpm\.sock~listen = 9000~' /etc/php/7.3/fpm/pool.d/www.conf
+RUN sed -i 's~listen = /run/php/php7\.4-fpm\.sock~listen = 9000~' /etc/php/7.4/fpm/pool.d/www.conf
+# RUN ls /etc/php/
 
 # Download and install WordPress CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
