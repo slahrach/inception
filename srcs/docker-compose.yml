@@ -37,6 +37,7 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       WP_USER: ${WP_USER}
       WP_PASSWORD: ${WP_PASSWORD}
+      WP_EMAIL: ${WP_EMAIL}
     networks:
       - mynetwork
     volumes:

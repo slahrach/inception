@@ -1,19 +1,19 @@
 build:
 	mkdir -p /Users/macbook/data/wordpress-files
 	mkdir -p /Users/macbook/data/wordpress-db
-	docker-compose build --no-cache
+	docker-compose -f ./srcs/docker-compose.yml build
 
 up:
-	docker-compose up --force-recreate
+	docker-compose -f ./srcs/docker-compose.yml up
 
 down:
-	docker-compose down -v wordpress mariadb --rmi all
+	docker-compose -f ./srcs/docker-compose.yml down --rmi all
 
 rebuild: down clean build up
 
 clean:
-	docker-compose rm -f
 	docker system prune -f
+	docker volume prune -f
 	rm -rf /Users/macbook/data/wordpress-files
 	rm -rf /Users/macbook/data/wordpress-db
 
